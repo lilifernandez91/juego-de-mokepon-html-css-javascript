@@ -1,29 +1,101 @@
 `use strict`;
 
+//Obtener elementos del html y asignarlos a la constante
 const botonMascotas = document.querySelector (`.boton-mascotas`)
-const inputHipodoge = document.getElementById("hipodoge")
-const inputCapipepo = document.getElementById("capipepo")
-const inputRatigueya = document.getElementById("ratigueya")
+
 const spanMascotaJugador = document.querySelector(".mascota-jugador")
 const spanMascotaEnemigo = document.querySelector(".mascota-enemigo")
-const botonFuego = document.querySelector(".boton-fuego")
-const botonAgua = document.querySelector(".boton-agua")
-const botonTierra = document.querySelector(".boton-tierra")
+
 const sectionMensajes = document.getElementById("resultado")
+
 const ataquesDelJugador = document.getElementById("ataques-del-jugador")
 const ataquesDelEnemigo = document.getElementById("ataques-del-enemigo")
+
 const spanVidasJugador = document.querySelector(".vidas-jugador")
 const spanVidasEnemigo = document.querySelector(".vidas-enemigo")
+
 const botonReiniciar = document.querySelector(".boton-reiniciar")
-botonReiniciar.style.display = "none"
+
 const sectionSeleccionarAtaque = document.querySelector(".seleccionar-ataque")
-sectionSeleccionarAtaque.style.display = "none"
 const sectionSeleccionarMascota = document.querySelector(".seleccionar-mascota")
 
+const contenedorTarjetas = document.getElementById("contenedorTarjetas")
+
+const contenedorAtaques = document.getElementById("contenedorAtaques")
+
+//variables que se les puede modificar su valor
+let mokepones = []
+let opcionDeMokepones
+let inputHipodoge 
+let inputCapipepo 
+let inputRatigueya 
 let ataqueJugador
-let ataqueEnemigo
+let ataquesEnemigo
+let mascotaJugador
+let ataquesMokepon
+let botonFuego 
+let botonAgua 
+let botonTierra 
 let vidasJugador = 3
 let vidasEnemigo = 3
+
+class Mokepon{
+    constructor(nombre,foto, vida){
+        this.nombre = nombre
+        this.foto = foto
+        this.vida = vida
+        this.ataques = []
+    }
+}
+
+let hipodoge = new Mokepon('Hipodoge', './images/mokepons_mokepon_hipodoge_attack.png', 5)
+
+let capipepo = new Mokepon('Capipepo', './images/mokepons_mokepon_capipepo_attack.png', 5)
+
+let ratigueya = new Mokepon('Ratigueya', './images/mokepons_mokepon_ratigueya_attack.png', 5)
+
+hipodoge.ataques.push(
+ {nombre: '💧', class: 'boton-agua'},
+ {nombre: '💧', class: 'boton-agua'},
+ {nombre: '💧', class: 'boton-agua'},
+ {nombre: '🌱', class: 'boton-tierra'},
+ {nombre: '🔥', class: 'boton-fuego'},
+)
+
+capipepo.ataques.push(
+    {nombre: '🌱', class: 'boton-tierra'},
+    {nombre: '🌱', class: 'boton-tierra'},
+    {nombre: '🌱', class: 'boton-tierra'},
+    {nombre: '💧', class: 'boton-agua'},
+    {nombre: '🔥', class: 'boton-fuego'},
+   )
+
+ratigueya.ataques.push(
+    {nombre: '🔥', class: 'boton-fuego'},
+    {nombre: '🔥', class: 'boton-fuego'},
+    {nombre: '🔥', class: 'boton-fuego'},
+    {nombre: '💧', class: 'boton-agua'},
+    {nombre: '🌱', class: 'boton-tierra'},
+   )
+
+   mokepones.push(hipodoge, capipepo, ratigueya)
+
+   //Forma en la que podemos iterar por cuantos elementos existan en un arreglo
+   mokepones.forEach((mokepon) => {
+    opcionDeMokepones = `
+            <input type="radio" name="mascota" id=${mokepon.nombre}>
+            <label for=${mokepon.nombre} class="tarjeta-de-mokepon">
+                <p>${mokepon.nombre}</p>
+                <img src=${mokepon.foto} alt="Imagen de ${mokepon.nombre}">
+            </label>
+    `
+    //seleccionamos un contenedor del html y le inyectamos el valor de la estructura
+    contenedorTarjetas.innerHTML += opcionDeMokepones
+
+        inputHipodoge = document.getElementById("Hipodoge")
+        inputCapipepo = document.getElementById("Capipepo")
+        inputRatigueya = document.getElementById("Ratigueya")
+   })
 
 const handleBotonMascotas = () => {
     
@@ -31,27 +103,53 @@ const handleBotonMascotas = () => {
     sectionSeleccionarAtaque.style.display = "flex"
 
     if (inputHipodoge.checked){
-        spanMascotaJugador.innerHTML = "Hipodoge"
+        spanMascotaJugador.innerHTML = inputHipodoge.id
+        mascotaJugador = inputHipodoge.id
     }else if (inputCapipepo.checked){
-        spanMascotaJugador.innerHTML = "Capipepo"
+        spanMascotaJugador.innerHTML = inputCapipepo.id
+        mascotaJugador = inputCapipepo.id
     }else if (inputRatigueya.checked){
-        spanMascotaJugador.innerHTML = "Ratigueya"
+        spanMascotaJugador.innerHTML = inputRatigueya.id
+        mascotaJugador = inputRatigueya.id
     }else{
         alert("Selecciona una mascota")
     }
+    extraerAtaques(mascotaJugador)
     seleccionarMascotaEnemigo()
 }
 
-const seleccionarMascotaEnemigo = () =>{
-    let mascotaAleatoria = aleatorio(1,3)
-
-    if(mascotaAleatoria == 1){
-        spanMascotaEnemigo.innerHTML = "Hipodoge"
-    } else if (mascotaAleatoria == 2){
-        spanMascotaEnemigo.innerHTML = "Capipepo"
-    }else{
-        spanMascotaEnemigo.innerHTML = "Ratigueya"
+const extraerAtaques = (mascotaJugador) => {
+    let ataques
+    
+    for (let i = 0; i < mokepones.length; i++) {
+        if(mascotaJugador === mokepones[i].nombre){
+            ataques = mokepones[i].ataques
+        }
     }
+    mostrarAtaques(ataques)
+}
+
+const mostrarAtaques = (ataques) => {
+
+ataques.forEach((ataque) =>{
+    ataquesMokepon = `
+    <button class="${ataque.class} boton-de-ataque">${ataque.nombre}</button>
+    `
+    contenedorAtaques.innerHTML += ataquesMokepon
+})
+    botonFuego = document.querySelector(".boton-fuego")
+    botonAgua = document.querySelector(".boton-agua")
+    botonTierra = document.querySelector(".boton-tierra")
+
+    botonFuego.addEventListener(`click`, handleBotonFuego)
+    botonAgua.addEventListener(`click`, handleBotonAgua)
+    botonTierra.addEventListener(`click`, handleBotonTierra)
+}
+
+const seleccionarMascotaEnemigo = () =>{
+    let mascotaAleatoria = aleatorio(0, mokepones.length -1)
+
+    spanMascotaEnemigo.innerHTML = mokepones[mascotaAleatoria].nombre
 }
 
 const handleBotonFuego = () => {
@@ -128,13 +226,9 @@ const revisarVidas = () => {
 const crearMensajeFinal = (resultadoFinal) => {
     sectionMensajes.innerHTML = resultadoFinal
 
-    const botonFuego = document.querySelector(".boton-fuego")
     botonFuego.disabled = true
-    const botonAgua = document.querySelector(".boton-agua")
     botonAgua.disabled = true
-    const botonTierra = document.querySelector(".boton-tierra")
     botonTierra.disabled = true
-
     botonReiniciar.style.display = "block"
 }
 
@@ -142,12 +236,12 @@ const handleBotonReiniciar = () => {
     location.reload()
 }
 
+sectionSeleccionarAtaque.style.display = "none"
+botonReiniciar.style.display = "none"
+
 const aleatorio = (min,max) => {
     return Math.floor(Math.random() * (max - min + 1)+ min)
    }
    
 botonMascotas.addEventListener(`click`, handleBotonMascotas)
-botonFuego.addEventListener(`click`, handleBotonFuego)
-botonAgua.addEventListener(`click`, handleBotonAgua)
-botonTierra.addEventListener(`click`, handleBotonTierra)
 botonReiniciar.addEventListener(`click`, handleBotonReiniciar)
