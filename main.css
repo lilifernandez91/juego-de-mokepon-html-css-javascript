@@ -99,10 +99,12 @@ input:checked + label{
 
 .boton-reiniciar{
     border: transparent;
+    border: 1px solid rgb(171, 70, 210);
     background-color:rgb(85, 216, 193);
     color: rgb(171, 70, 210);
     font-family: 'Poppins', sans-serif;
     margin-bottom: 20px;
+    border-radius: 5px;
 }
 
 .ataques{
