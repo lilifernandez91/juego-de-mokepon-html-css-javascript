@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300&display=swap');
 
+button{
+    cursor: pointer;
+}
+
 body{
     font-family: 'Poppins', sans-serif;
     background-color: rgb(252, 246, 156);
@@ -14,8 +18,10 @@ body{
 
 .titulo{
     color: rgb(255, 111, 181);
-    font-size: 32px;
+    font-size: 48px;
+    text-transform: capitalize;
     font-family: 'Fredoka One', cursive;
+    margin-bottom: 15px;
 }
  .subtitulo{
     color: rgb(255, 111, 181);
@@ -39,6 +45,7 @@ body{
     color: rgb(171, 70, 210);
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .tarjeta-de-mokepon img{
@@ -58,9 +65,9 @@ input:checked + label{
     width: 180px;
     height: 40px;
     border-radius: 20px;
-    background: transparent;
+    background: rgb(255, 111, 181);
+    color: #fcf69c;
     border: 2px solid rgb(171, 70, 210);
-    color: rgb(255, 111, 181); 
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     margin-top: 30px;
@@ -80,7 +87,8 @@ input:checked + label{
     width: 100px;
     color: rgb(171, 70, 210); 
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;   
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .mensajes{
@@ -88,7 +96,7 @@ input:checked + label{
     height: 38px;
     background: rgb(255, 111, 181);
     color: rgb(252, 246, 156);
-    padding: 20px;
+    padding: 35px;
     margin-top: 20px;
     border-radius: 20px;
     display: flex;
@@ -98,13 +106,14 @@ input:checked + label{
 }
 
 .boton-reiniciar{
-    border: transparent;
-    border: 1px solid rgb(171, 70, 210);
     background-color:rgb(85, 216, 193);
     color: rgb(171, 70, 210);
     font-family: 'Poppins', sans-serif;
     margin-bottom: 20px;
     border-radius: 5px;
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
 }
 
 .ataques{
